@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS admins (
+    admin_id INT PRIMARY KEY,
+    user_id INT UNIQUE,
+    active BOOLEAN,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
