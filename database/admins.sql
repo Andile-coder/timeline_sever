@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS admins (
-    admin_id INT PRIMARY KEY,
-    user_id INT UNIQUE,
+    admin_id VARCHAR(100) PRIMARY KEY,
+    user_id VARCHAR(100) UNIQUE,
     active BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

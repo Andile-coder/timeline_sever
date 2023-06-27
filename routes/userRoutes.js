@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
+const {
+  createUser,
+  loginUser,
+  currentUser,
+} = require("../controllers/userController");
+const validateToken = require("../middlewear/validateToken");
+router.post("/login", loginUser);
 
-router.route("/login").post((req, res) => {
-  res.send({ message: "login user" });
-});
+router.post("/register", createUser);
 
-router.route("/register").post((req, res) => {
-  res.send({ message: "create user" });
-});
+router.get("/current", validateToken, currentUser);
 
-router.route("/current").get((req, res) => {
-  res.send({ message: "get current user" });
-});
 router.route("/logout").get((req, res) => {
   res.send({ message: "logout user" });
 });

@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS users (
-    user_id INT PRIMARY KEY,
+    user_id VARCHAR(100) PRIMARY KEY,
     username VARCHAR(50),
     email VARCHAR(100),
     password VARCHAR(100),

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS timelines (
-    timeline_id INT PRIMARY KEY,
-    user_id INT,
+    timeline_id VARCHAR(100) PRIMARY KEY,
+    user_id VARCHAR(100),
     status_id INT,
     title VARCHAR(100),
     FOREIGN KEY (user_id) REFERENCES users(user_id),

@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS events (
-    event_id INT PRIMARY KEY,
-    timeline_id INT,
-    user_id INT,
+    event_id VARCHAR(100) PRIMARY KEY,
+    timeline_id VARCHAR(100),
+    user_id VARCHAR(100),
     title VARCHAR(100),
     status_id INT,
     category_id INT,

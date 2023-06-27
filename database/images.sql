@@ -1,5 +1,5 @@
 CREATE TABLE event_images (
-    image_id INT PRIMARY KEY,
+    image_id VARCHAR(100) PRIMARY KEY,
     event_id INT,
     image_url VARCHAR(255),
     FOREIGN KEY (event_id) REFERENCES events(event_id),
