@@ -31,7 +31,7 @@ const errorHandler = (err, req, res, next) => {
       });
       break;
     default:
-      console.log("All good");
+      console.log("All good", statusCode);
   }
 };
 

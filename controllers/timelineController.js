@@ -2,6 +2,7 @@ const { constants } = require("../constants");
 const Timeline = require("../models/timelineModel");
 const asyncHandler = require("express-async-handler");
 const { generateUniqueTimelineID } = require("../middlewear/uniqueUser");
+const { where } = require("sequelize");
 
 //@desc create timeline
 //@route POST /api/timelines
@@ -20,14 +21,43 @@ const createTimeline = asyncHandler(async (req, res) => {
     user_id: req.user.user_id,
   })
     .then((timeline) => {
-      res
-        .status(201)
-        .json({ message: "timeline created succesfully " + timeline.toJSON() });
+      res.status(201).json({ data: timeline.toJSON() });
     })
     .catch((error) => {
       res.status(400);
       throw new Error("Failed to create timeline");
     });
+});
+
+//@desc get timeline
+//@route GET /api/timelines/:id
+//@access private
+const getTimeline = asyncHandler(async (req, res) => {
+  const params = req.params;
+  const user = req.user;
+  Timeline.findOne({ where: { timeline_id: params.id, user_id: user.user_id } })
+    .then((timeline) => {
+      res.status(201).json(timeline.toJSON());
+    })
+    .catch((error) => {
+      res.status(400);
+      throw new Error("Failed to get timeline", error);
+    });
+});
+
+//@desc get user timelines
+//@route GET /api/timelines/user/:id
+//@access private
+const getUserTimelines = asyncHandler(async (req, res) => {
+  try {
+    const user = req.user;
+    const timelines = await Timeline.findAll({
+      where: { user_id: user.user_id },
+    });
+    res.status(201).json(timelines);
+  } catch (error) {
+    res.status(400).json({ error: "Failed to get user timelines" });
+  }
 });
 
 //@desc Delete timeline
@@ -37,4 +67,4 @@ const createTimeline = asyncHandler(async (req, res) => {
 //@desc update timeline
 //@route PUT /api/timelines
 //@access private
-module.exports = { createTimeline };
+module.exports = { createTimeline, getTimeline, getUserTimelines };

@@ -14,7 +14,6 @@ const createUser = asyncHandler(async (req, res) => {
   //check available user
 
   const availableUser = await User.findOne({ where: { email } });
-
   if (availableUser) {
     res.status(400);
     throw new Error("User already registered");
@@ -69,7 +68,7 @@ const loginUser = asyncHandler(async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "59m" }
     );
     res.status(200).json({ accessToken });
   } else {
@@ -83,7 +82,10 @@ const loginUser = asyncHandler(async (req, res) => {
 //@access private
 
 const currentUser = asyncHandler(async (req, res) => {
-  console.log("hello");
+  if (!req.user) {
+    res.sendStatus(constants.UNAUTHORISED);
+    throw new Error("Invalid User Credentials");
+  }
   res.status(200).json(req.user);
 });
 module.exports = { createUser, loginUser, currentUser };

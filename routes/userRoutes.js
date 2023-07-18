@@ -10,7 +10,7 @@ router.post("/login", loginUser);
 
 router.post("/register", createUser);
 
-router.get("/current", validateToken, currentUser);
+router.get("/user", validateToken, currentUser);
 
 router.route("/logout").get((req, res) => {
   res.send({ message: "logout user" });

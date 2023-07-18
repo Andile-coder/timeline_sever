@@ -1,6 +1,6 @@
 CREATE TABLE event_images (
     image_id VARCHAR(100) PRIMARY KEY,
-    event_id INT,
+    event_id VARCHAR(255) ,
     image_url VARCHAR(255),
     FOREIGN KEY (event_id) REFERENCES events(event_id),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

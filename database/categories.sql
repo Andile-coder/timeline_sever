@@ -1,7 +1,22 @@
-CREATE TABLE categories (
-    category_id INT PRIMARY KEY,
-    name ENUM('MOVIES','EDUCATIONAL','CARS','OTHER'), 
-    description TEXT,
-    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    last_updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+INSERT INTO categories (category_id, name, description)
+VALUES
+    (1, 'artificial intelligence', 'Category related to artificial intelligence'),
+    (2, 'cars', 'Category related to cars'),
+    (3, 'movies', 'Category related to movies'),
+    (4, 'react', 'Category related to React'),
+    (5, 'nodej', 'Category related to Node.js'),
+    (6, 'sports', 'Category related to sports'),
+    (7, 'music', 'Category related to music'),
+    (8, 'travel', 'Category related to travel'),
+    (9, 'food', 'Category related to food'),
+    (10, 'technology', 'Category related to technology'),
+    (11, 'fashion', 'Category related to fashion'),
+    (12, 'science', 'Category related to science'),
+    (13, 'health', 'Category related to health'),
+    (14, 'books', 'Category related to books'),
+    (15, 'history', 'Category related to history'),
+    (16, 'business', 'Category related to business'),
+    (17, 'education', 'Category related to education'),
+    (18, 'gaming', 'Category related to gaming'),
+    (19, 'fitness', 'Category related to fitness'),
+    (20, 'art', 'Category related to art');
