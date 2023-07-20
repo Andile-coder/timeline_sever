@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const User = require("../models/userModel");
 const Timeline = require("../models/timelineModel");
 const Event = require("../models/eventModel");
-const generateUniqueID = async () => {
+const generateUniqueID = async ({ event_date }) => {
   const uniquId = uuidv4();
 
   return (userFound = await User.findOne({
@@ -22,19 +22,25 @@ const generateUniqueID = async () => {
     }));
 };
 
-const generateUniqueTimelineID = async () => {
-  const uniquId = uuidv4();
-  console.log("hello");
+const generateUniqueEventID = async ({ event_date, count }) => {
+  const dateId = event_date.split("T")[0].split("-");
+  let event_id;
+  if (count <= 9) {
+    event_id = dateId.join("") + `0${count}`;
+  } else {
+    event_id = dateId.join("") + `${count}`;
+  }
+
   return (userFound = await Event.findOne({
     where: {
-      event_id: uniquId,
+      event_id,
     },
   })
     .then(async (event) => {
       if (event) {
-        await generateUniqueID();
+        return await generateUniqueEventID({ event_date, count: count + 1 });
       } else {
-        return uniquId;
+        return event_id;
       }
     })
     .catch((error) => {
@@ -42,7 +48,7 @@ const generateUniqueTimelineID = async () => {
     }));
 };
 
-const generateUniqueEventID = async () => {
+const generateUniqueTimelineID = async () => {
   const uniquId = uuidv4();
 
   return (userFound = await Timeline.findOne({
@@ -52,7 +58,7 @@ const generateUniqueEventID = async () => {
   })
     .then(async (user) => {
       if (user) {
-        await generateUniqueID();
+        await generateUniqueTimelineID();
       } else {
         return uniquId;
       }

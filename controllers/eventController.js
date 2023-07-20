@@ -23,8 +23,11 @@ const createEvent = asyncHandler(async (req, res) => {
     res.status(constants.VALIDATION_ERROR);
     throw new Error("Event Missing Values");
   }
+
+  const eventId = await generateUniqueEventID({ event_date, count: 0 });
+  console.log("++++++++++++", eventId);
   Event.create({
-    event_id: await generateUniqueEventID(),
+    event_id: eventId,
     title,
     description,
     timeline_id,
@@ -39,6 +42,7 @@ const createEvent = asyncHandler(async (req, res) => {
     })
     .catch((error) => {
       res.status(400);
+      console.log(error);
       throw new Error("Failed to create event", error);
     });
 });
