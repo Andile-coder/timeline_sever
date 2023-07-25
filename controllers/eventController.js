@@ -25,13 +25,13 @@ const createEvent = asyncHandler(async (req, res) => {
   }
 
   const eventId = await generateUniqueEventID({ event_date, count: 0 });
-  console.log("++++++++++++", eventId);
+
   Event.create({
     event_id: eventId,
     title,
     description,
     timeline_id,
-    status_id: 1,
+    status_id: 4, //default status=Pending
     category_id,
     event_date,
     y_axis,
@@ -49,18 +49,35 @@ const createEvent = asyncHandler(async (req, res) => {
 
 //@desc get all timeline events for a user
 //@route GET /api/events/timeline/:timeline_id
-//@access private
+//@access public
 
 const getTimelineEvents = asyncHandler(async (req, res) => {
   const user = req.user;
   const params = req.params;
-  Event.findAll({ where: { timeline_id: params.id, user_id: user.user_id } })
+  Event.findAll({ where: { timeline_id: params.id } })
     .then((timelineEvents) => {
       res.status(201).json(timelineEvents);
     })
     .catch((error) => {
       res.status(400);
-      throw new Error("Failed to get user events", error);
+      res.errored("Failed to get user events", error);
+    });
+});
+
+//@desc Get event
+//@route GET /api/events/:id
+//@access private
+
+const getEvent = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const params = req.params;
+  Event.findOne({ where: { event_id: params.id, user_id: user.user_id } })
+    .then((event) => {
+      res.status(201).json(event);
+    })
+    .catch((error) => {
+      res.status(400);
+      res.json({ message: "Failed to get event", error });
     });
 });
 
@@ -71,4 +88,5 @@ const getTimelineEvents = asyncHandler(async (req, res) => {
 //@desc update event
 //@route PUT /api/events
 //@access private
-module.exports = { createEvent, getTimelineEvents };
+
+module.exports = { createEvent, getTimelineEvents, getEvent };

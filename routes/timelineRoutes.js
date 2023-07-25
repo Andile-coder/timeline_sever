@@ -8,7 +8,7 @@ const validateToken = require("../middlewear/validateToken");
 const router = express.Router();
 
 router.route("/").get((req, res) => res.send({ message: "All Timelines" }));
-router.get("/:id", validateToken, getTimeline);
+router.get("/:id", getTimeline);
 router.get("/user/:id", validateToken, getUserTimelines);
 router.post("/", validateToken, createTimeline);
 

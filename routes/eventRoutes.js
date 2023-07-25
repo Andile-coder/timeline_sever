@@ -5,12 +5,12 @@ const validateToken = require("../middlewear/validateToken");
 const {
   createEvent,
   getTimelineEvents,
+  getEvent,
 } = require("../controllers/eventController");
 router.route("/").get((req, res) => res.send({ message: "All Events" }));
-router.route("/:id").get((req, res) => res.send({ message: "One Event" }));
-
+router.get("/:id", validateToken, getEvent);
 router.post("/", validateToken, createEvent);
-router.get("/timeline/:id", validateToken, getTimelineEvents); //events for timeline
+router.get("/timeline/:id", getTimelineEvents); //events for timeline
 
 router
   .route("/:eventId")

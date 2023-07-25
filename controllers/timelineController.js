@@ -25,23 +25,23 @@ const createTimeline = asyncHandler(async (req, res) => {
     })
     .catch((error) => {
       res.status(400);
-      throw new Error("Failed to create timeline");
+      res.errored("Failed to create timeline");
     });
 });
 
 //@desc get timeline
 //@route GET /api/timelines/:id
-//@access private
+//@access public
 const getTimeline = asyncHandler(async (req, res) => {
   const params = req.params;
   const user = req.user;
-  Timeline.findOne({ where: { timeline_id: params.id, user_id: user.user_id } })
+  Timeline.findOne({ where: { timeline_id: params.id } })
     .then((timeline) => {
       res.status(201).json(timeline.toJSON());
     })
     .catch((error) => {
       res.status(400);
-      throw new Error("Failed to get timeline", error);
+      res.json({ message: error });
     });
 });
 

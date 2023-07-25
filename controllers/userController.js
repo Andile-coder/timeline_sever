@@ -11,8 +11,6 @@ const jwt = require("jsonwebtoken");
 const createUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
-  //check available user
-
   const availableUser = await User.findOne({ where: { email } });
   if (availableUser) {
     res.status(400);
@@ -25,13 +23,13 @@ const createUser = asyncHandler(async (req, res) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-
+  const user_id = await generateUniqueID();
   User.create({
     username,
     email,
     password: hashedPassword,
     active: true,
-    user_id: await generateUniqueID(),
+    user_id,
   })
     .then((user) => {
       res
