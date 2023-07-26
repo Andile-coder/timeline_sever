@@ -50,9 +50,6 @@ const Event = sequelize.define(
     event_date: {
       type: DataTypes.DATE,
     },
-    y_axis: {
-      type: DataTypes.STRING(100),
-    },
   },
   {
     tableName: "events", // Specify the table name

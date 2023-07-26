@@ -12,14 +12,7 @@ const createEvent = asyncHandler(async (req, res) => {
     req.body;
   const user = req.user;
 
-  if (
-    !title ||
-    !description ||
-    !category_id ||
-    !event_date ||
-    !y_axis ||
-    !timeline_id
-  ) {
+  if (!title || !description || !category_id || !event_date || !timeline_id) {
     res.status(constants.VALIDATION_ERROR);
     throw new Error("Event Missing Values");
   }
@@ -34,7 +27,6 @@ const createEvent = asyncHandler(async (req, res) => {
     status_id: 4, //default status=Pending
     category_id,
     event_date,
-    y_axis,
     user_id: user.user_id,
   })
     .then((event) => {
